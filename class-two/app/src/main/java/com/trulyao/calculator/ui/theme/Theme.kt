@@ -4,16 +4,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 
-private val DarkColorScheme = darkColorScheme(
+private val DefaultColorScheme = darkColorScheme(
     primary = Indigo600,
-    secondary = Indigo400,
-    surface =  Dark
+    secondary = Indigo200,
+    surface = Dark
 )
 
 @Composable
-fun CalculatorTheme(content: @Composable () -> Unit) {
+fun CalculatorTheme(
+    content: @Composable () -> Unit
+) {
     MaterialTheme(
-        colorScheme = DarkColorScheme,
+        colorScheme = DefaultColorScheme,
+        typography = Typography,
         content = content
     )
 }
