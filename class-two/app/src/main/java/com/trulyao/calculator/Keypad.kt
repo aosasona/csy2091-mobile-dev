@@ -21,14 +21,15 @@ val buttons = listOf(
 fun Keypad(handleKeyPress: (Key) -> Unit) {
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 10.dp)
+            .padding(bottom = 18.dp)
     ) {
         buttons.forEach { members ->
             Row(modifier = Modifier.fillMaxWidth()) {
                 members.forEach { button ->
                     Button(
-                        onClick = { /* todo */ },
+                        onClick = { handleKeyPress(button) },
                         colors = ButtonDefaults.buttonColors(
                             containerColor = if (button.type != KeyType.Number) {
                                 MaterialTheme.colorScheme.primary
@@ -43,14 +44,14 @@ fun Keypad(handleKeyPress: (Key) -> Unit) {
                             }
                         ),
                         modifier = Modifier
-                            .height(90.dp)
+                            .height(95.dp)
                             .clip(CircleShape)
                             .padding(6.dp)
                             .weight(if (button == Key.Equals) 0.5f else 0.25f)
                     ) {
                         Text(
                             button.value,
-                            fontSize = 18.sp
+                            fontSize = if (button.type != KeyType.Number) 22.sp else 20.sp
                         )
                     }
                 }
