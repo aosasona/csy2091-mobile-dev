@@ -2,9 +2,7 @@ package com.trulyao.calculator
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,7 +23,24 @@ fun CalculatorScreen() {
 
     fun handleKeyPress(key: Key) {
         when (key.type) {
-            KeyType.Number -> if (currentValue.length <= 9) currentValue += key.value
+            KeyType.Number ->  {
+                if (currentValue.length >= 9) return;
+                if (key.value ==  "." && currentValue.contains(".")) return;
+                currentValue += key.value
+            }
+            KeyType.Special -> when (key) {
+                Key.Delete -> {
+                    if (currentValue.isEmpty()) return;
+                    currentValue = currentValue.slice(0..currentValue.length - 2)
+                }
+
+                Key.Clear -> {
+                    currentValue = "";
+                    previousValue = "";
+                    operand = Key.None;
+                }
+                else -> print("Unhandled special key")
+            }
             else -> println("Unhandled event")
         }
     }
@@ -34,13 +49,22 @@ fun CalculatorScreen() {
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        Column (verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxSize()) {
-            Text(
-                "$previousValue ${operand.value} $currentValue",
-                color = MaterialTheme.colorScheme.secondary,
-                fontSize = 52.sp,
-                modifier = Modifier.padding(vertical = 18.dp)
-            )
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 10.dp)
+                .padding(horizontal = 12.dp)
+        ) {
+            Box(modifier = Modifier) {
+                Header()
+
+                Text(
+                    if (currentValue.isNotEmpty()) currentValue else previousValue,
+                    color = MaterialTheme.colorScheme.secondary,
+                    fontSize = 52.sp,
+                )
+            }
 
             Keypad(handleKeyPress = { key -> handleKeyPress(key) })
         }

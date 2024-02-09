@@ -22,8 +22,8 @@ fun Keypad(handleKeyPress: (Key) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 10.dp)
-            .padding(bottom = 18.dp)
+//            .padding(horizontal = 10.dp)
+//            .padding(bottom = 18.dp)
     ) {
         buttons.forEach { members ->
             Row(modifier = Modifier.fillMaxWidth()) {
